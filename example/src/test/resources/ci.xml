@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="TestNG Sample Suite1">
+    <test name="test1">
+        <parameter name="sql" value="SELECT * FROM test_cases a, project b WHERE a.project_id = b.id AND a.ci_flag = TRUE AND a.deleted = FALSE AND b.integration_flag = TRUE AND b.deleted = FALSE"/>
+        <classes>
+            <class name="com.winbaoxian.testng.example.TestNGExecutor"/>
+        </classes>
+    </test>
+</suite>

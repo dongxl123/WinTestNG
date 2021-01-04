@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="TestNG Sample Suite">
+    <!--reportng测试报告-->
+    <suite-files >
+        <!--模块1-->
+        <suite-file path="example.xml"></suite-file>
+
+        <!--模块2-->
+    </suite-files>
+</suite>

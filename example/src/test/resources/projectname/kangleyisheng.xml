@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="TestNG Sample Suite1">
+    <test name="test1">
+        <parameter name="sql" value="select * from test_cases where id =3"/>
+        <classes>
+            <class name="com.winbaoxian.testng.example.TestNGExecutor"/>
+        </classes>
+    </test>
+</suite>

@@ -1,0 +1,20 @@
+description = 'example'
+version = '1.0.0-SNAPSHOT'
+
+apply plugin: 'org.springframework.boot'
+
+dependencies {
+    compile project(":wintestng-core")
+}
+
+test {
+    reports.html.enabled = false
+    reports.junitXml.enabled = false
+    binResultsDir file("$buildDir/locks/p" + System.getProperty('ProjectId', 'base'))
+    useTestNG() {
+        systemProperty 'ProjectId', System.getProperty('ProjectId')
+        //指定testng配置文件
+        suites(file('src/test/resources/projectname/example.xml'))
+        jvmArgs '-Dfile.encoding=UTF-8'
+    }
+}

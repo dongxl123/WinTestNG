@@ -1,0 +1,49 @@
+description = 'WinTestNG-core'
+version = '2.0.0-SNAPSHOT'
+
+apply plugin: 'org.springframework.boot'
+
+dependencies {
+    compile 'com.google.inject:guice:4.2.2'
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+    compile 'org.springframework.boot:spring-boot-starter-freemarker'
+    compile 'org.springframework.boot:spring-boot-starter-data-redis'
+    compile 'io.rest-assured:rest-assured:3.3.0'
+    compile 'org.testng:testng:6.14.3'
+    compile 'com.alibaba:QLExpress:3.2.0'
+    compile 'org.apache.commons:commons-math3:3.6.1'
+    compile 'com.alibaba:druid:1.1.23'
+    compile 'com.winbaoxian.common:freemarker-functions:1.0.0-SNAPSHOT'
+    compile 'org.springframework.boot:spring-boot-starter-test'
+    compile 'org.python:jython-standalone:2.7.2'
+}
+
+gradle.taskGraph.whenReady { taskGraph ->
+    //编译的时候放入资源
+    sourceSets {
+        main {
+            java {
+                exclude '**/WinTestNGApplication.java'
+            }
+        }
+    }
+}
+
+//支持上传到maven nexus库
+uploadArchives {
+    repositories {
+        mavenDeployer {
+//            repository(url: "https://repo.rdc.aliyun.com/repository/77327-snapshot-eSlStJ/") {
+//                authentication(userName: "YqEg7E", password: "kqPhqT56Db")
+//            }
+            repository(url: "http://192.168.180.191:8081/nexus/content/repositories/snapshots/") {
+                authentication(userName: "admin", password: "admin123")
+            }
+            pom.project {
+                name = project.name
+                packaging = 'jar'
+                description = 'wintesng core'
+            }
+        }
+    }
+}

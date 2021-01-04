@@ -1,0 +1,80 @@
+allprojects {
+    apply plugin: 'maven'
+
+    group = 'com.winbaoxian.testng'
+}
+
+subprojects {
+    buildscript {
+        repositories {
+            mavenCentral()
+        }
+        dependencies {
+            classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.5.19.RELEASE'
+        }
+    }
+
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    sourceCompatibility = 1.8
+
+    repositories {
+        mavenLocal()
+        maven { url "http://192.168.180.191:8081/nexus/content/repositories/public" }
+        maven { url "http://192.168.180.191:8081/nexus/content/repositories/snapshots/" }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven {
+            credentials {
+                username 'YqEg7E'
+                password 'kqPhqT56Db'
+            }
+            url 'https://repo.rdc.aliyun.com/repository/77327-snapshot-eSlStJ/'
+        }
+        mavenCentral()
+    }
+
+    dependencies {
+        compile 'org.apache.commons:commons-lang3:3.7'
+        compile 'commons-beanutils:commons-beanutils:1.9.3'
+        compileOnly 'org.projectlombok:lombok:1.16.22'
+        compile 'org.mapstruct:mapstruct-jdk8:1.2.0.Final'
+        compile 'org.mapstruct:mapstruct-processor:1.2.0.Final'
+        compile 'org.mongodb:mongo-java-driver:3.10.1'
+        compile 'mysql:mysql-connector-java:8.0.15'
+    }
+
+    task "create-dirs" << {
+        sourceSets*.java.srcDirs*.each { it.mkdirs() }
+        sourceSets*.resources.srcDirs*.each { it.mkdirs() }
+    }
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+    }
+}
+
+def isWindows() {
+    return org.gradle.internal.os.OperatingSystem.current().isWindows()
+}
+
+String apidocCmd = isWindows() ? 'apidoc.cmd' : 'apidoc'
+task apidocs(type: Exec, description: '执行生成apidoc文档操作') {
+    workingDir './'
+    def docCommand = [apidocCmd, '-o', './build/apidocs', '-f', 'java', '--debug', 'true']
+    commandLine docCommand
+}
+
+String servicedocCmd = isWindows() ? 'servicedoc.cmd' : 'servicedoc'
+task servicedocs(type: Exec, description: '执行生成servicedoc文档操作') {
+    workingDir './'
+    def serviceCommand = [servicedocCmd, '-o', './build/servicedocs', '-f', 'java', '--debug', 'true']
+    commandLine serviceCommand
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.4'
+    distributionType = 'all'
+}
+
+
+
+
